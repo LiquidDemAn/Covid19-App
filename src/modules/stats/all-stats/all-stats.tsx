@@ -1,31 +1,28 @@
-import React, {useEffect, useState} from 'react';
-import './all-stats.scss'
+import React, {useEffect} from 'react';
 import {useDispatch} from "react-redux";
-import {useAppSelector} from "../../../store/hooks";
-import {getSummary} from "../services/selectors";
-import {loadAllStats} from "../services/actions";
-import {Map} from "../components/Map";
-import ReactTooltip from "react-tooltip";
 import {GlobalTable} from "../components/global-table";
+import {FoundCountries} from "../components/found-countries";
+import {SearchInput} from "../components/search-input";
+import {MapChart} from "../components/map-chart";
+import {loadAllStats} from "../services/actions";
 
 export const AllStats = () => {
     const dispatch = useDispatch();
-    const summary = useAppSelector(getSummary);
 
     useEffect(() => {
-        dispatch(loadAllStats())
+        // dispatch(loadAllStats());
     }, []);
 
-    const [content, setContent] = useState("");
 
     return (
-        <div className='all-stats'>
-            <div>
+        <div className='d-flex justify-content-center mt-5 gap-3'>
+            <div className='d-flex flex-column gap-3'>
                 <GlobalTable/>
+                <SearchInput/>
+                <FoundCountries/>
             </div>
-            <div className='all-stats__map'>
-                <Map setTooltipContent={setContent}/>
-                <ReactTooltip>{content}</ReactTooltip>
+            <div className='w-75'>
+                <MapChart/>
             </div>
         </div>
     );
