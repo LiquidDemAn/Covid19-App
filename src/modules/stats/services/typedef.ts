@@ -35,5 +35,5 @@ export type Summary = {
 
 export type StateType = {
     summary?: Summary,
-    countriesList?: Country[]
+    foundCountries?: Country[]
 }

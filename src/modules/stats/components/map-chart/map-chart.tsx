@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {Map} from "../Map";
-import ReactTooltip from "react-tooltip";
+import {Map} from './map';
+import ReactTooltip from 'react-tooltip';
 
 export const MapChart = () => {
-    const [content, setContent] = useState("");
+    const [content, setContent] = useState('');
 
     return (
         <div>

@@ -10,13 +10,12 @@ export const AllStats = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // dispatch(loadAllStats());
+        dispatch(loadAllStats());
     }, []);
 
-
     return (
-        <div className='d-flex justify-content-center mt-5 gap-3'>
-            <div className='d-flex flex-column gap-3'>
+        <div className='d-flex justify-content-center mt-5 gap-3 p-2'>
+            <div className='d-flex w-25 flex-column gap-3'>
                 <GlobalTable/>
                 <SearchInput/>
                 <FoundCountries/>

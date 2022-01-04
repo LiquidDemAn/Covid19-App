@@ -1,28 +1,27 @@
-import {AppState} from "../../../store/hooks";
+import {AppState} from '../../../store/hooks';
 
-export const getSummary = (state: AppState) => state.stats.summary;
 export const getGlobal = (state: AppState) => state.stats.summary?.Global;
 export const getCountries = (state: AppState) => state.stats.summary?.Countries;
-export const getMin = (state: AppState) => {
-    const summary = getSummary(state);
 
-    return summary?.Countries.reduce((acc, cur) => {
-        return acc > cur.TotalConfirmed ? cur.TotalConfirmed : acc
+export const getMinConfirmed = (state: AppState) => {
+    const countries = getCountries(state);
+    return countries?.reduce((acc, cur) => {
+        return acc > cur.TotalConfirmed ? cur.TotalConfirmed : acc;
     }, Infinity) || 0;
 };
-export const getMax = (state: AppState) => {
-    const summary = getSummary(state);
-    return summary?.Countries.reduce((acc, cur) => {
-        return acc < cur.TotalConfirmed ? cur.TotalConfirmed : acc
-    }, 0) || Infinity;
+export const getMaxConfirmed = (state: AppState) => {
+    const countries = getCountries(state);
+    return countries?.reduce((acc, cur) => {
+        return acc < cur.TotalConfirmed ? cur.TotalConfirmed : acc;
+    }, 0) || 0;
 };
 
-export const getCountriesList = (state: AppState) => {
-    const maxLength = 5;
-    const countries = state.stats.countriesList;
-    const sortedCountries = countries?.sort((a,b) => {
-        return a.TotalConfirmed - b.TotalConfirmed
-    })
-
-    return sortedCountries && sortedCountries.slice(0, maxLength)
-}
+export const getFoundCountries = (state: AppState, length?: number) => {
+    const countries = state.stats.foundCountries?.concat();
+    const sortedCountries = countries?.sort((a,b) => b.TotalConfirmed - a.TotalConfirmed);
+    if (length) {
+        return sortedCountries?.slice(0, length);
+    } else {
+        return sortedCountries;
+    }
+};
