@@ -1,12 +1,18 @@
 import {StateType} from './typedef';
 import {createReducer} from '@reduxjs/toolkit';
-import {clearFoundCountries, loadAllStats, setFoundCountries} from './actions';
+import {clearFoundCountries, loadAllStats, loadCountryStats, setFoundCountries} from './actions';
 
-const State: StateType = {};
+const State: StateType = {
+    countryStats: []
+};
 
 export const stats = createReducer(State, builder => builder
     .addCase(loadAllStats.fulfilled, (state, {payload}) => {
         state.summary = payload;
+    })
+
+    .addCase(loadCountryStats.fulfilled, (state, {payload}) => {
+        state.countryStats = payload;
     })
 
     .addCase(setFoundCountries, (state, {payload}) => {

@@ -18,6 +18,7 @@
     "react-bootstrap": "^2.1.0",
     "react-calendar": "^3.5.0",
     "react-dom": "^17.0.2",
+    "react-google-charts": "^3.0.15",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
@@ -52,6 +53,7 @@
   },
   "devDependencies": {
     "@types/d3-scale": "^4.0.2",
+    "@types/react-calendar": "^3.4.4",
     "@types/react-simple-maps": "^1.0.7"
   }
 }

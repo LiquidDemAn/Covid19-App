@@ -33,7 +33,23 @@ export type Summary = {
     Data: string
 }
 
+export type Day = {
+    Country: string,
+    CountryCode: string,
+    Province: string,
+    City: string
+    CityCode: string,
+    Lat: string,
+    Lon: string,
+    Confirmed: number,
+    Deaths: number,
+    Recovered: number,
+    Active: number,
+    Date: string
+}
+
 export type StateType = {
     summary?: Summary,
-    foundCountries?: Country[]
+    foundCountries?: Country[],
+    countryStats: Day[]
 }

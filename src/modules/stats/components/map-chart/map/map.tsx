@@ -31,7 +31,7 @@ export const Map = ({setTooltipContent}: Props) => {
                             const country = countries?.find(country => country.CountryCode === geo.properties.ISO_A2)
 
                             return (
-                                <Link key={country?.ID || geo.rsmKey} to={`/${country?.Country}`}>
+                                <Link key={country?.ID} to={`/${country?.Slug}`}>
                                     <Geography
                                         geography={geo}
                                         onMouseEnter={() => {
