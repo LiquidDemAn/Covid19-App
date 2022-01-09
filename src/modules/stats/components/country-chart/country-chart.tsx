@@ -1,12 +1,11 @@
 import React from 'react';
-import {Chart} from "react-google-charts";
+import {Chart} from 'react-google-charts';
 
 type Props = {
     period: ((number | Date)[])[],
-    country: string | undefined
 }
 
-export const CountryChart = ({period, country}: Props) => {
+export const CountryChart = ({period}: Props) => {
     const titles = ['Day', 'Confirmed', 'Deaths', 'Recovered', 'Active'];
     const data = [titles, ...period];
     const firstDay = period.length && new Date(period[0][0]).toLocaleDateString();

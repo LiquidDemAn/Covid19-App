@@ -16,33 +16,32 @@ export const getMaxConfirmed = (state: AppState) => {
     }, 0) || 0;
 };
 
-export const getFoundCountries = (state: AppState, length?: number) => {
-    const countries = state.stats.foundCountries?.concat();
-    const sortedCountries = countries?.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed);
-    if (length) {
-        return sortedCountries?.slice(0, length);
+export const getFoundCountries = (state: AppState, listLength?: number) => {
+    const foundCountries = state.stats.foundCountries;
+    if (listLength) {
+        return foundCountries?.slice(0, listLength);
     } else {
-        return sortedCountries;
+        return foundCountries;
     }
 };
 
-export const getPeriod = (state: AppState, date: string | undefined, daysCounter: number) => {
+export const getPeriod = (state: AppState, date: string, daysNumber: number) => {
     const countryStats = state.stats.countryStats;
-    const selectedDay = countryStats.find(item => new Date(item.Date).toDateString() === date);
-    const selectedDayIndex = countryStats.findIndex(item => item === selectedDay);
-    const selectedPeriod = countryStats.slice(
-        selectedDayIndex - daysCounter + 1 < 0 ? 0 : selectedDayIndex - daysCounter + 1, selectedDayIndex + 1
+    const day = countryStats.find(item => new Date(item.Date).toDateString() === date);
+    const dayIndex = countryStats.findIndex(item => item === day);
+    const period = countryStats.slice(
+        dayIndex - daysNumber + 1 > 0 ? dayIndex - daysNumber + 1 : 0 , dayIndex + 1
     );
 
-    return selectedPeriod.map(item => [new Date(item.Date), item.Confirmed, item.Deaths, item.Recovered, item.Active])
+    return period.map(item => [new Date(item.Date), item.Confirmed, item.Deaths, item.Recovered, item.Active]);
 };
 
-export const getFirstDate = (state: AppState) => {
+export const getMinDate = (state: AppState) => {
     const countryStats = state.stats.countryStats;
     return new Date(countryStats[0]?.Date);
 }
 
-export const getLastDate = (state: AppState) => {
+export const getMaxDate = (state: AppState) => {
     const countryStats = state.stats.countryStats;
     return new Date(countryStats[countryStats.length - 1]?.Date);
 }

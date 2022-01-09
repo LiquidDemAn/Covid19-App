@@ -13,7 +13,7 @@ function App() {
         <Provider store={store}>
             <Routes>
                 <Route path='/' element={<AllStats/>}/>
-                <Route path='/country/:country' element={<CountryPage/>}/>
+                <Route path='/country/:countryName' element={<CountryPage/>}/>
             </Routes>
         </Provider>
     );

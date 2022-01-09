@@ -1,5 +1,3 @@
-export type Premium = {};
-
 export type Country = {
     ID: string;
     Country: string;
@@ -12,7 +10,6 @@ export type Country = {
     NewRecovered: number;
     TotalRecovered: number;
     Date: string;
-    Premium: Premium;
 };
 
 export type Global = {
