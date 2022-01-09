@@ -26,7 +26,7 @@ export const getFoundCountries = (state: AppState, length?: number) => {
     }
 };
 
-export const getPeriod = (state: AppState, date: string, daysCounter: number) => {
+export const getPeriod = (state: AppState, date: string | undefined, daysCounter: number) => {
     const countryStats = state.stats.countryStats;
     const selectedDay = countryStats.find(item => new Date(item.Date).toDateString() === date);
     const selectedDayIndex = countryStats.findIndex(item => item === selectedDay);
@@ -34,7 +34,7 @@ export const getPeriod = (state: AppState, date: string, daysCounter: number) =>
         selectedDayIndex - daysCounter + 1 < 0 ? 0 : selectedDayIndex - daysCounter + 1, selectedDayIndex + 1
     );
 
-    return selectedPeriod.map(item => [new Date(item.Date), item.Confirmed, item.Deaths, item.Recovered])
+    return selectedPeriod.map(item => [new Date(item.Date), item.Confirmed, item.Deaths, item.Recovered, item.Active])
 };
 
 export const getFirstDate = (state: AppState) => {

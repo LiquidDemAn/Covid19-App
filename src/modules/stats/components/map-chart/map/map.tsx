@@ -9,6 +9,7 @@ import {
 import {useAppSelector} from '../../../../../store/hooks';
 import {getCountries, getMaxConfirmed, getMinConfirmed} from '../../../services/selectors';
 import {Link} from 'react-router-dom';
+import {Country} from '../../../services/typedef';
 
 const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 
@@ -21,6 +22,15 @@ export const Map = ({setTooltipContent}: Props) => {
     const maxConfirmed = useAppSelector(getMaxConfirmed);
     const countries = useAppSelector(getCountries);
     const colorScale = scaleLinear([minConfirmed, maxConfirmed], ['#ffedea', '#ff5233']);
+    const onMouseEnter = (country: Country | undefined) => {
+        setTooltipContent(
+            `${country?.Country} :
+                      New Confirmed: ${country?.NewConfirmed} |
+                      Total Confirmed: ${country?.TotalConfirmed} |
+                      New Deaths: ${country?.NewDeaths} |
+                      Total Deaths: ${country?.TotalDeaths} |`
+        )
+    }
 
     return (
         <ComposableMap data-tip="" width={900} height={400} projectionConfig={{scale: 150}}>
@@ -31,24 +41,14 @@ export const Map = ({setTooltipContent}: Props) => {
                             const country = countries?.find(country => country.CountryCode === geo.properties.ISO_A2)
 
                             return (
-                                <Link key={country?.ID} to={`/${country?.Slug}`}>
+                                country && <Link key={geo.rsmKey} to={`/country/${country?.Country}`}>
                                     <Geography
                                         geography={geo}
-                                        onMouseEnter={() => {
-                                            setTooltipContent(
-                                                `${country?.Country} :
-                                                   New Confirmed: ${country?.NewConfirmed} |
-                                                   Total Confirmed: ${country?.TotalConfirmed} |
-                                                   New Deaths: ${country?.NewDeaths} |
-                                                   Total Deaths: ${country?.TotalDeaths} |`
-                                            )
-                                        }}
-                                        onMouseLeave={() => {
-                                            setTooltipContent('');
-                                        }}
+                                        onMouseEnter={() => onMouseEnter(country)}
+                                        onMouseLeave={() => setTooltipContent('')}
                                         style={{
                                             default: {
-                                                fill: country ? colorScale(country.TotalConfirmed) : '#000',
+                                                fill: colorScale(country.TotalConfirmed),
                                                 outline: 'none'
                                             },
                                             hover: {

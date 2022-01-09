@@ -2,17 +2,19 @@ import React from 'react';
 import {Chart} from "react-google-charts";
 
 type Props = {
-    period: ((number | Date)[])[]
+    period: ((number | Date)[])[],
+    country: string | undefined
 }
 
-export const CountryChart = ({period}: Props) => {
-    const titles = ["Day", "Confirmed", "Deaths", "Recovered"]
-    const data = [titles, ...period]
+export const CountryChart = ({period, country}: Props) => {
+    const titles = ['Day', 'Confirmed', 'Deaths', 'Recovered', 'Active'];
+    const data = [titles, ...period];
+    const firstDay = period.length && new Date(period[0][0]).toLocaleDateString();
+    const lastDay = period.length && new Date(period[period.length - 1][0]).toLocaleDateString();
 
     const options = {
         chart: {
-            title: "Stats of Covid-19",
-            subtitle: `Days(${period.length})`,
+            title: `Period - ${period.length} days(${firstDay} - ${lastDay})`
         },
     };
 

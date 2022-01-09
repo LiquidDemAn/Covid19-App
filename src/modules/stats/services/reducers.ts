@@ -3,7 +3,7 @@ import {createReducer} from '@reduxjs/toolkit';
 import {clearFoundCountries, loadAllStats, loadCountryStats, setFoundCountries} from './actions';
 
 const State: StateType = {
-    countryStats: []
+    countryStats: [],
 };
 
 export const stats = createReducer(State, builder => builder

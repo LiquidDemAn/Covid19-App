@@ -2,6 +2,7 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import {useAppSelector} from '../../../../store/hooks';
 import {getFoundCountries} from '../../services/selectors';
+import {Link} from 'react-router-dom';
 
 export const FoundCountries = () => {
     const foundCountries = useAppSelector(state => getFoundCountries(state, 5));
@@ -20,13 +21,17 @@ export const FoundCountries = () => {
             <tbody>
             {foundCountries && foundCountries.length ?
                 foundCountries.map((country, index) => (
-                <tr key={country.ID}>
-                    <td>{index + 1}</td>
-                    <td>{country.Country}</td>
-                    <td>{country.TotalConfirmed}</td>
-                    <td>{country.TotalDeaths}</td>
-                    <td>{country.TotalRecovered}</td>
-                </tr>
+                    <tr key={country.ID}>
+                        <td>{index + 1}</td>
+                        <td>
+                            <Link to={`/country/${country?.Country}`}>
+                                {country.Country}
+                            </Link>
+                        </td>
+                        <td>{country.TotalConfirmed}</td>
+                        <td>{country.TotalDeaths}</td>
+                        <td>{country.TotalRecovered}</td>
+                    </tr>
                 )) :
                 <tr>
                     <td colSpan={5} className='text-center'>
