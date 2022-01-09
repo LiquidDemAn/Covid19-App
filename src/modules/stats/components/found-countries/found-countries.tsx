@@ -1,4 +1,5 @@
 import React from 'react';
+import './found-countries.scss'
 import {Table} from 'react-bootstrap';
 import {useAppSelector} from '../../../../store/hooks';
 import {getFoundCountries} from '../../services/selectors';
@@ -24,7 +25,7 @@ export const FoundCountries = () => {
                     <tr key={country.ID}>
                         <td>{index + 1}</td>
                         <td>
-                            <Link to={`/country/${country?.Country}`}>
+                            <Link to={`/country/${country.Country}`}>
                                 {country.Country}
                             </Link>
                         </td>
@@ -34,7 +35,7 @@ export const FoundCountries = () => {
                     </tr>
                 )) :
                 <tr>
-                    <td colSpan={5} className='text-center'>
+                    <td colSpan={5} className='found-countries__empty'>
                         List is Empty
                     </td>
                 </tr>}
