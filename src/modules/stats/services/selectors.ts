@@ -17,15 +17,15 @@ export const getMaxConfirmed = (state: AppState) => {
         return acc < cur.TotalConfirmed ? cur.TotalConfirmed : acc;
     }, 0) || 0;
 };
-export const getPeriod = (state: AppState, date: string, daysNumber: number) => {
+export const getStatsByPeriod = (state: AppState, date: Date | undefined, daysNumber: number) => {
     const countryStats = state.stats.countryStats;
-    const day = countryStats.find(item => new Date(item.Date).toDateString() === date);
+    const day = countryStats.find(item => new Date(item.Date).toDateString() === date?.toDateString());
     const dayIndex = countryStats.findIndex(item => item === day);
-    const period = countryStats.slice(
+    const statsByPeriod = countryStats.slice(
         dayIndex - daysNumber + 1 > 0 ? dayIndex - daysNumber + 1 : 0 , dayIndex + 1
     );
 
-    return period.map(item => [new Date(item.Date), item.Confirmed, item.Deaths, item.Recovered, item.Active]);
+    return statsByPeriod.map(item => [new Date(item.Date), item.Confirmed, item.Deaths, item.Recovered, item.Active]);
 };
 
 export const getMinDate = (state: AppState) => {
@@ -35,6 +35,8 @@ export const getMinDate = (state: AppState) => {
 
 export const getMaxDate = (state: AppState) => {
     const countryStats = state.stats.countryStats;
-    return new Date(countryStats[countryStats.length - 1]?.Date);
+    const maxDate = countryStats[countryStats.length - 1]?.Date;
+    if (maxDate) {
+        return new Date(maxDate)
+    }
 }
-

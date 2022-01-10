@@ -2,18 +2,19 @@ import React from 'react';
 import {Chart} from 'react-google-charts';
 
 type Props = {
-    period: ((number | Date)[])[],
+    stats: ((number | Date)[])[],
 }
 
-export const CountryChart = ({period}: Props) => {
+export const CountryChart = ({stats}: Props) => {
     const titles = ['Day', 'Confirmed', 'Deaths', 'Recovered', 'Active'];
-    const data = [titles, ...period];
-    const firstDay = period.length && new Date(period[0][0]).toLocaleDateString();
-    const lastDay = period.length && new Date(period[period.length - 1][0]).toLocaleDateString();
+    const data = [titles, ...stats];
+    const statsLength = stats.length;
+    const firstDay = statsLength && new Date(stats[0][0]).toLocaleDateString();
+    const lastDay = statsLength && new Date(stats[statsLength - 1][0]).toLocaleDateString();
 
     const options = {
         chart: {
-            title: `Period - ${period.length} days(${firstDay} - ${lastDay})`
+            title: `Period - ${statsLength} days(${firstDay} - ${lastDay})`
         },
     };
 
