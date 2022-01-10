@@ -9,5 +9,5 @@ export const loadCountryStats = createAsyncThunk<Day[], string | undefined>('sta
     return await fetch(`https://api.covid19api.com/total/country/${country}`).then(res => res.json());
 })
 
-export const setFoundCountries = createAction<{ value: string }>('stats/set-found-countries');
+export const setFoundCountries = createAction<{ value: string, listLength: number | undefined }>('stats/set-found-countries');
 export const clearFoundCountries = createAction('stats/clear-found-countries');

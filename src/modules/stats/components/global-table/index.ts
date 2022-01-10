@@ -1,1 +1,0 @@
-export {GlobalTable} from './global-table'

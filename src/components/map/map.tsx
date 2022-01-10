@@ -1,37 +1,23 @@
 import React from 'react';
-import {scaleLinear} from 'd3-scale';
 import {
     ZoomableGroup,
     ComposableMap,
     Geographies,
     Geography
 } from 'react-simple-maps';
-import {useAppSelector} from '../../../../../store/hooks';
-import {getCountries, getMaxConfirmed, getMinConfirmed} from '../../../services/selectors';
 import {Link} from 'react-router-dom';
-import {Country} from '../../../services/typedef';
+import {Country} from '../../modules/stats/services/typedef';
 
 const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 
 type Props = {
-    setTooltipContent: React.Dispatch<string>
+    setTooltipContent: React.Dispatch<string>,
+    colorScale?: (value: number) => string,
+    countries?: Country[],
+    onMouseEnter: (country: Country) => void
 };
 
-export const Map = ({setTooltipContent}: Props) => {
-    const minConfirmed = useAppSelector(getMinConfirmed);
-    const maxConfirmed = useAppSelector(getMaxConfirmed);
-    const countries = useAppSelector(getCountries);
-    const colorScale = scaleLinear([minConfirmed, maxConfirmed], ['#ffedea', '#ff5233']);
-    const onMouseEnter = (country: Country | undefined) => {
-        setTooltipContent(
-            `${country?.Country} :
-                      New Confirmed: ${country?.NewConfirmed} |
-                      Total Confirmed: ${country?.TotalConfirmed} |
-                      New Deaths: ${country?.NewDeaths} |
-                      Total Deaths: ${country?.TotalDeaths} |`
-        )
-    }
-
+export const Map = ({setTooltipContent, colorScale, countries, onMouseEnter}: Props) => {
     return (
         <ComposableMap data-tip="" width={900} height={400} projectionConfig={{scale: 150}}>
             <ZoomableGroup>
@@ -41,14 +27,14 @@ export const Map = ({setTooltipContent}: Props) => {
                             const country = countries?.find(country => country.CountryCode === geo.properties.ISO_A2)
 
                             return (
-                                country && <Link key={geo.rsmKey} to={`/country/${country?.Country}`}>
+                                country && <Link key={country.ID} to={`/country/${country.Country}`}>
                                     <Geography
                                         geography={geo}
                                         onMouseEnter={() => onMouseEnter(country)}
                                         onMouseLeave={() => setTooltipContent('')}
                                         style={{
                                             default: {
-                                                fill: colorScale(country.TotalConfirmed),
+                                                fill: colorScale ? colorScale(country.TotalConfirmed) : '#D6D6DA',
                                                 outline: 'none'
                                             },
                                             hover: {

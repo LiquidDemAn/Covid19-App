@@ -1,13 +1,14 @@
 import React from 'react';
-import './found-countries.scss'
+import './countries-table.scss'
 import {Table} from 'react-bootstrap';
-import {useAppSelector} from '../../../../store/hooks';
-import {getFoundCountries} from '../../services/selectors';
 import {Link} from 'react-router-dom';
+import {Country} from '../../services/typedef';
 
-export const FoundCountries = () => {
-    const foundCountries = useAppSelector(state => getFoundCountries(state, 5));
+type Props = {
+    countries?: Country[]
+}
 
+export const CountriesTable = ({countries}: Props) => {
     return (
         <Table striped bordered hover>
             <thead>
@@ -20,8 +21,8 @@ export const FoundCountries = () => {
             </tr>
             </thead>
             <tbody>
-            {foundCountries && foundCountries.length ?
-                foundCountries.map((country, index) => (
+            {countries && countries.length ?
+                countries.map((country, index) => (
                     <tr key={country.ID}>
                         <td>{index + 1}</td>
                         <td>
@@ -40,6 +41,7 @@ export const FoundCountries = () => {
                     </td>
                 </tr>}
             </tbody>
+
         </Table>
     );
 };
