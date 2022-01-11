@@ -2,7 +2,10 @@ import {AppState} from '../../../store/hooks';
 
 export const getGlobal = (state: AppState) => state.stats.summary?.Global;
 export const getCountries = (state: AppState) => state.stats.summary?.Countries;
-export const getFoundCountries = (state: AppState) => state.stats.foundCountries;
+
+export const getFoundCountries = (state: AppState, listLength: number ) => {
+    return state.stats.foundCountries?.slice(0, listLength);
+};
 
 export const getMinConfirmed = (state: AppState) => {
     const countries = getCountries(state);
