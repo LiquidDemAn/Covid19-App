@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {FormControl, InputGroup} from 'react-bootstrap';
 
 type Props = {

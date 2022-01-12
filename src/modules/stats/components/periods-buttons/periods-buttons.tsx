@@ -4,7 +4,7 @@ import {Button} from 'react-bootstrap';
 
 type Props = {
     allowedPeriods: number[],
-    setPeriod: (period: number) => void
+    setPeriod: (period: number) => void,
 }
 
 export const PeriodsButtons = ({allowedPeriods, setPeriod} : Props) => {

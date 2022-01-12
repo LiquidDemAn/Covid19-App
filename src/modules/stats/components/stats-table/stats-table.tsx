@@ -1,10 +1,10 @@
 import React from 'react';
-import {ListGroup} from "react-bootstrap";
+import {ListGroup} from 'react-bootstrap';
 import {Global} from '../../services/typedef';
 
 type Props = {
     stats?: Global
-}
+};
 
 export const StatsTable = ({stats}: Props) => {
     return (

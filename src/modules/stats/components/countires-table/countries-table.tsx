@@ -1,16 +1,16 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import './countries-table.scss'
+import './countries-table.scss';
 import {Button, Table} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {Country} from '../../services/typedef';
 
 type Props = {
     countries?: Country[],
-    listLength: number
-    setListLength: Dispatch<SetStateAction<number>>,
-}
+    countriesLength: number
+    setFilter: Dispatch<SetStateAction<number>>,
+};
 
-export const CountriesTable = ({countries, listLength, setListLength}: Props) => {
+export const CountriesTable = ({countries, countriesLength, setFilter}: Props) => {
     return (
         <div>
             <Table striped bordered hover>
@@ -45,13 +45,12 @@ export const CountriesTable = ({countries, listLength, setListLength}: Props) =>
                     </tr>}
                 </tbody>
             </Table>
-            {countries && listLength <= countries.length &&
-                <Button onClick={() => setListLength(Infinity)}>
+            {countries && countriesLength > countries.length &&
+                <Button onClick={() => setFilter(Infinity)}>
                     See all
                 </Button>
             }
         </div>
-
     );
 };
 

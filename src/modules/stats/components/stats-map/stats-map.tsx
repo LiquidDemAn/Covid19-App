@@ -3,13 +3,13 @@ import {Map} from '../../../../components/map';
 import ReactTooltip from 'react-tooltip';
 import {scaleLinear} from 'd3-scale';
 import {useAppSelector} from '../../../../store/hooks';
-import {getCountries, getMaxConfirmed, getMinConfirmed} from '../../services/selectors';
+import {getCountriesStats, getMaxConfirmed, getMinConfirmed} from '../../services/selectors';
 
 export const StatsMap = () => {
     const [content, setContent] = useState<string | ReactElement>('');
     const minConfirmed = useAppSelector(getMinConfirmed);
     const maxConfirmed = useAppSelector(getMaxConfirmed);
-    const countries = useAppSelector(getCountries);
+    const countriesStats = useAppSelector(getCountriesStats);
     const colorScale = scaleLinear([minConfirmed, maxConfirmed], ['#ffedea', '#ff5233']);
 
     return (
@@ -17,7 +17,7 @@ export const StatsMap = () => {
             <Map
                 setTooltipContent={setContent}
                 colorScale={colorScale}
-                countries={countries}
+                countries={countriesStats}
             />
             <ReactTooltip>{content}</ReactTooltip>
         </div>

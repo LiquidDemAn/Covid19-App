@@ -7,17 +7,19 @@ import {SearchCountries} from '../components/search-countries';
 import {StatsMap} from '../components/stats-map';
 import {clearFoundCountries, loadAllStats, setFoundCountries} from '../services/actions';
 import {useAppSelector} from '../../../store/hooks';
-import {getFoundCountries, getGlobal} from '../services/selectors';
+import {getFoundCountries, getFoundCountriesLength, getGlobalStats} from '../services/selectors';
 
 export const AllStats = () => {
     const dispatch = useDispatch();
-    const [listLength, setListLength] = useState(5);
-    const foundCountries = useAppSelector(state => getFoundCountries(state, listLength));
-    const global = useAppSelector(getGlobal);
+    const initialFilter = 5;
+    const [filter, setFilter] = useState(initialFilter);
+    const filteredCountries = useAppSelector(state => getFoundCountries(state, filter));
+    const countriesLength = useAppSelector(getFoundCountriesLength);
+    const globalStats = useAppSelector(getGlobalStats);
 
     const onSearchCountries = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = event.target.value;
-        setListLength(5);
+        setFilter(initialFilter);
 
         if (value) {
             dispatch(setFoundCountries({value: value}));
@@ -33,9 +35,9 @@ export const AllStats = () => {
     return (
         <div className='all-stats'>
             <div className='all-stats__tables'>
-                <StatsTable stats={global}/>
+                <StatsTable stats={globalStats}/>
                 <SearchCountries onChange={onSearchCountries}/>
-                <CountriesTable countries={foundCountries} listLength={listLength} setListLength={setListLength}/>
+                <CountriesTable countries={filteredCountries} countriesLength={countriesLength} setFilter={setFilter}/>
             </div>
             <div className='all-stats__map'>
                 <StatsMap/>
