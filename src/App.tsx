@@ -5,14 +5,14 @@ import {store} from './store/store';
 import {AllStats} from './modules/stats/all-stats';
 import {Routes} from 'react-router-dom';
 import {Route} from 'react-router-dom';
-import {CountryPage} from './modules/stats/country-page';
+import {CountryStats} from './modules/stats/country-stats';
 
 function App() {
     return (
         <Provider store={store}>
             <Routes>
                 <Route path='/' element={<AllStats/>}/>
-                <Route path='/country/:countryName' element={<CountryPage/>}/>
+                <Route path='/:countryName' element={<CountryStats/>}/>
             </Routes>
         </Provider>
     );

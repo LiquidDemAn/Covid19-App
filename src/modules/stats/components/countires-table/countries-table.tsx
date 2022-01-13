@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import React from 'react';
 import './countries-table.scss';
 import {Button, Table} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
@@ -6,13 +6,13 @@ import {Country} from '../../services/typedef';
 
 type Props = {
     countries?: Country[],
-    countriesLength: number
-    setFilter: Dispatch<SetStateAction<number>>,
+    allCountriesLength: number,
+    seeAll: () => void
 };
 
-export const CountriesTable = ({countries, countriesLength, setFilter}: Props) => {
+export const CountriesTable = ({countries, allCountriesLength, seeAll}: Props) => {
     return (
-        <div>
+         <div>
             <Table striped bordered hover>
                 <thead>
                 <tr>
@@ -29,7 +29,7 @@ export const CountriesTable = ({countries, countriesLength, setFilter}: Props) =
                         <tr key={country.ID}>
                             <td>{index + 1}</td>
                             <td>
-                                <Link to={`/country/${country.Country}`}>
+                                <Link to={`/${country.Country}`}>
                                     {country.Country}
                                 </Link>
                             </td>
@@ -39,16 +39,16 @@ export const CountriesTable = ({countries, countriesLength, setFilter}: Props) =
                         </tr>
                     )) :
                     <tr>
-                        <td colSpan={5} className='found-countries__empty'>
+                        <td colSpan={5} className='countries-table__empty'>
                             List is Empty
                         </td>
                     </tr>}
                 </tbody>
             </Table>
-            {countries && countriesLength > countries.length &&
-                <Button onClick={() => setFilter(Infinity)}>
-                    See all
-                </Button>
+            {countries && allCountriesLength > countries.length &&
+            <Button onClick={seeAll}>
+                See all
+            </Button>
             }
         </div>
     );

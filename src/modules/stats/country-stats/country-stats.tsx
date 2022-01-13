@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import './country-page.scss'
+import './country-stats.scss'
 import 'react-calendar/dist/Calendar.css';
 import {useParams} from 'react-router-dom';
 import Calendar from 'react-calendar';
@@ -11,7 +11,7 @@ import {getMinDate, getMaxDate, getStatsByPeriod} from '../services/selectors';
 import {LinkComponent} from '../../../components/link-component';
 import {PeriodsButtons} from '../components/periods-buttons';
 
-export const CountryPage = () => {
+export const CountryStats = () => {
     const {countryName} = useParams();
     const dispatch = useDispatch();
     const allowedPeriods = [7, 14, 30, 60];
@@ -30,9 +30,9 @@ export const CountryPage = () => {
     }, [maxDate])
 
     return (
-        <div className='country-page'>
-            <h1 className='country-page__title'>Stats of Covid-19 by {countryName}</h1>
-            <div className='country-page__stats'>
+        <div className='country-stats'>
+            <h1 className='country-stats__title'>Stats of Covid-19 by {countryName}</h1>
+            <div className='country-stats__stats'>
                 <Calendar
                     maxDate={maxDate}
                     minDate={minDate}
@@ -43,7 +43,7 @@ export const CountryPage = () => {
                 <CountryChart stats={statsByPeriod}/>
             </div>
 
-            <div className='country-page__links'>
+            <div className='country-stats__links'>
                 <LinkComponent to='/'>
                     Home
                 </LinkComponent>

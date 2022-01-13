@@ -48,5 +48,5 @@ export type Day = {
 export type StateType = {
     summary?: Summary,
     foundCountries?: Country[],
-    countryStats?: Day[]
+    countryStats: Day[]
 }

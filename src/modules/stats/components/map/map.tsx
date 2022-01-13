@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React from 'react';
 import {
     ZoomableGroup,
     ComposableMap,
@@ -6,18 +6,18 @@ import {
     Geography
 } from 'react-simple-maps';
 import {Link} from 'react-router-dom';
-import {Country} from '../../modules/stats/services/typedef';
-import {TooltipContent} from '../../modules/stats/components/tooltip-content';
+import {Country} from '../../services/typedef';
 
 const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 
 type Props = {
-    setTooltipContent: React.Dispatch<string | ReactElement>,
-    colorScale?: (value: number) => string,
+    onMouseEnter: (country: Country) => void
+    onMouseLeave: () => void
+    colorScale: (value: number) => string,
     countries?: Country[],
 };
 
-export const Map = ({setTooltipContent, colorScale, countries}: Props) => {
+export const Map = ({onMouseEnter, onMouseLeave, colorScale, countries}: Props) => {
     return (
         <ComposableMap data-tip="" width={900} height={400} projectionConfig={{scale: 150}}>
             <ZoomableGroup>
@@ -27,14 +27,14 @@ export const Map = ({setTooltipContent, colorScale, countries}: Props) => {
                             const country = countries?.find(country => country.CountryCode === geo.properties.ISO_A2)
 
                             return (
-                                country && <Link key={country.ID} to={`/country/${country.Country}`}>
+                                country && <Link key={country.ID} to={`/${country.Country}`}>
                                     <Geography
                                         geography={geo}
-                                        onMouseEnter={() => setTooltipContent(<TooltipContent country={country}/>)}
-                                        onMouseLeave={() => setTooltipContent('')}
+                                        onMouseEnter={() => onMouseEnter(country)}
+                                        onMouseLeave={onMouseLeave}
                                         style={{
                                             default: {
-                                                fill: colorScale ? colorScale(country.TotalConfirmed) : '#D6D6DA',
+                                                fill: colorScale(country.TotalConfirmed),
                                                 outline: 'none'
                                             },
                                             hover: {

@@ -2,7 +2,10 @@ import {StateType} from './typedef';
 import {createReducer} from '@reduxjs/toolkit';
 import {clearFoundCountries, loadAllStats, loadCountryStats, setFoundCountries} from './actions';
 
-const State: StateType = {};
+const State: StateType = {
+    foundCountries: [],
+    countryStats: []
+};
 
 export const stats = createReducer(State, builder => builder
     .addCase(loadAllStats.fulfilled, (state, {payload}) => {
@@ -19,7 +22,6 @@ export const stats = createReducer(State, builder => builder
             return country.Country.toLowerCase().indexOf(payload.value.toLowerCase()) === 0;
         });
         state.foundCountries = filteredCountries?.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed);
-
     })
 
     .addCase(clearFoundCountries, (state) => {
