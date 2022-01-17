@@ -1,3 +1,5 @@
-.countries-table__empty {
-  text-align: center;
+.countries-table {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 }

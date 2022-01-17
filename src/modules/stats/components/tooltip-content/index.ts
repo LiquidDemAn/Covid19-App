@@ -1,1 +1,1 @@
-export {TooltipContent} from './tooltip-content'
+export {TooltipContent} from './tooltip-content';

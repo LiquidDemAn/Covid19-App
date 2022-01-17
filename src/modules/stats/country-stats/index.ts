@@ -1,1 +1,1 @@
-export {CountryStats} from './country-stats'
+export {CountryStats} from './country-stats';

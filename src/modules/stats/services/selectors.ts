@@ -5,17 +5,16 @@ export const getCountriesStats = (state: AppState) => state.stats.summary?.Count
 export const getCountryStats = (state: AppState) => state.stats.countryStats;
 export const getFoundCountriesLength = (state: AppState) => state.stats.foundCountries?.length || -1;
 
-export const getFoundCountries = (state: AppState, filter: number) => {
-    if (!isFinite(filter)) {
+export const getFoundCountries = (state: AppState, listLength: number) => {
+    if (!isFinite(listLength)) {
         return state.stats.foundCountries;
     } else {
-        return state.stats.foundCountries?.slice(0, filter);
+        return state.stats.foundCountries?.slice(0, listLength);
     }
 };
 
 export const getMinConfirmed = (state: AppState) => {
     const countriesStats = getCountriesStats(state);
-
     return countriesStats?.reduce((acc, cur) => {
         return acc > cur.TotalConfirmed ? cur.TotalConfirmed : acc;
     }, Infinity) || 0;
@@ -23,7 +22,6 @@ export const getMinConfirmed = (state: AppState) => {
 
 export const getMaxConfirmed = (state: AppState) => {
     const countriesStats = getCountriesStats(state);
-
     return countriesStats?.reduce((acc, cur) => {
         return acc < cur.TotalConfirmed ? cur.TotalConfirmed : acc;
     }, 0) || 0;
@@ -31,7 +29,6 @@ export const getMaxConfirmed = (state: AppState) => {
 
 export const getMinDate = (state: AppState) => {
     const countryStats = getCountryStats(state);
-
     if (countryStats.length) {
         return new Date(countryStats[0].Date);
     } else {
@@ -41,7 +38,6 @@ export const getMinDate = (state: AppState) => {
 
 export const getMaxDate = (state: AppState) => {
     const countryStats = getCountryStats(state);
-
     if (countryStats.length) {
         return new Date(countryStats[countryStats.length - 1].Date);
     } else {
@@ -56,7 +52,10 @@ export const getStatsByPeriod = (state: AppState, date: Date, daysNumber: number
     const statsByPeriod = countryStats.slice(
         dayIndex - daysNumber + 1 > 0 ? dayIndex - daysNumber + 1 : 0, dayIndex + 1
     );
-
     return statsByPeriod.map(item => [new Date(item.Date), item.Confirmed, item.Deaths, item.Recovered, item.Active]);
-
 };
+
+export const getProvinces = (state: AppState, date: Date) => {
+    const provincesStats = state.stats.provincesStats;
+    return provincesStats.filter(item => new Date(item.Date).toDateString() === date.toDateString())
+}

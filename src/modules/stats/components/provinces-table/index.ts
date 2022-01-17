@@ -1,0 +1,1 @@
+export {ProvincesTable} from './provinces-table'

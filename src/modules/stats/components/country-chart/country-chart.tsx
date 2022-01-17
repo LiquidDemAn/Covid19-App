@@ -3,7 +3,7 @@ import {Chart} from 'react-google-charts';
 
 type Props = {
     stats: ((number | Date)[])[],
-}
+};
 
 export const CountryChart = ({stats}: Props) => {
     const titles = ['Day', 'Confirmed', 'Deaths', 'Recovered', 'Active'];

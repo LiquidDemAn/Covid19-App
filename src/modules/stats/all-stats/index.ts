@@ -1,1 +1,1 @@
-export {AllStats} from './all-stats'
+export {AllStats} from './all-stats';

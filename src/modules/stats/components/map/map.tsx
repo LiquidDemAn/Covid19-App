@@ -11,10 +11,10 @@ import {Country} from '../../services/typedef';
 const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 
 type Props = {
-    onMouseEnter: (country: Country) => void
-    onMouseLeave: () => void
-    colorScale: (value: number) => string,
     countries?: Country[],
+    colorScale: (value: number) => string,
+    onMouseEnter: (country: Country) => void,
+    onMouseLeave: () => void
 };
 
 export const Map = ({onMouseEnter, onMouseLeave, colorScale, countries}: Props) => {
@@ -24,7 +24,7 @@ export const Map = ({onMouseEnter, onMouseLeave, colorScale, countries}: Props) 
                 <Geographies geography={geoUrl}>
                     {({geographies}) =>
                         geographies.map(geo => {
-                            const country = countries?.find(country => country.CountryCode === geo.properties.ISO_A2)
+                            const country = countries?.find(country => country.CountryCode === geo.properties.ISO_A2);
 
                             return (
                                 country && <Link key={country.ID} to={`/${country.Country}`}>

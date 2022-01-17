@@ -6,7 +6,7 @@ type Props = {
     stats?: Global
 };
 
-export const StatsTable = ({stats}: Props) => {
+export const GlobalList = ({stats}: Props) => {
     return (
         <ListGroup>
             <ListGroup.Item>New Confirmed: {stats?.NewConfirmed}</ListGroup.Item>

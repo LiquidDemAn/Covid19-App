@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import './all-stats.scss'
+import './all-stats.scss';
 import {useDispatch} from 'react-redux';
-import {StatsTable} from '../components/stats-table';
+import {GlobalList} from '../components/global-list';
 import {CountriesTable} from '../components/countires-table';
-import {SearchCountries} from '../components/search-countries';
 import {MapWrapper} from '../components/map-wrapper';
 import {clearFoundCountries, loadAllStats, setFoundCountries} from '../services/actions';
 import {useAppSelector} from '../../../store/hooks';
@@ -11,15 +10,15 @@ import {getFoundCountries, getFoundCountriesLength, getGlobalStats} from '../ser
 
 export const AllStats = () => {
     const dispatch = useDispatch();
-    const initialLength = 5;
-    const [listLength, setListLength] = useState(initialLength);
-    const countriesByLength = useAppSelector(state => getFoundCountries(state, listLength));
+    const initialListLength = 5;
+    const [listLength, setListLength] = useState(initialListLength);
+    const countries = useAppSelector(state => getFoundCountries(state, listLength));
     const allCountriesLength = useAppSelector(getFoundCountriesLength);
     const globalStats = useAppSelector(getGlobalStats);
 
-    const onSearchCountries = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const searchHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = event.target.value;
-        setListLength(listLength);
+        setListLength(initialListLength);
 
         if (value) {
             dispatch(setFoundCountries({value: value}));
@@ -28,7 +27,7 @@ export const AllStats = () => {
         }
     };
 
-    const seeAll = () => {
+    const seeAllHandler = () => {
         setListLength(Infinity);
     };
 
@@ -39,12 +38,12 @@ export const AllStats = () => {
     return (
         <div className='all-stats'>
             <div className='all-stats__tables'>
-                <StatsTable stats={globalStats}/>
-                <SearchCountries onChange={onSearchCountries}/>
+                <GlobalList stats={globalStats}/>
                 <CountriesTable
-                    countries={countriesByLength}
+                    countries={countries}
                     allCountriesLength={allCountriesLength}
-                    seeAll={seeAll}
+                    searchHandler={searchHandler}
+                    seeAllHandler={seeAllHandler}
                 />
             </div>
             <div className='all-stats__map'>

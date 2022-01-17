@@ -1,1 +1,1 @@
-export {PeriodsButtons} from './periods-buttons'
+export {PeriodsButtons} from './periods-buttons';

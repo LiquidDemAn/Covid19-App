@@ -1,10 +1,17 @@
 import {StateType} from './typedef';
 import {createReducer} from '@reduxjs/toolkit';
-import {clearFoundCountries, loadAllStats, loadCountryStats, setFoundCountries} from './actions';
+import {
+    loadAllStats,
+    loadCountryStats,
+    loadProvincesStats,
+    setFoundCountries,
+    clearFoundCountries
+} from './actions';
 
 const State: StateType = {
     foundCountries: [],
-    countryStats: []
+    countryStats: [],
+    provincesStats: []
 };
 
 export const stats = createReducer(State, builder => builder
@@ -14,6 +21,10 @@ export const stats = createReducer(State, builder => builder
 
     .addCase(loadCountryStats.fulfilled, (state, {payload}) => {
         state.countryStats = payload;
+    })
+
+    .addCase(loadProvincesStats.fulfilled, (state, {payload}) => {
+        state.provincesStats = payload.sort((a, b) => b.Confirmed - a.Confirmed);
     })
 
     .addCase(setFoundCountries, (state, {payload}) => {

@@ -1,1 +1,1 @@
-export {CountryChart} from './country-chart'
+export {CountryChart} from './country-chart';

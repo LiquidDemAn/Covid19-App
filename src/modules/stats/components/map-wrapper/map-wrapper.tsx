@@ -9,26 +9,26 @@ import {Country} from '../../services/typedef';
 
 export const MapWrapper = () => {
     const [tooltipContent, setTooltipContent] = useState<string | ReactElement>('');
+    const countries = useAppSelector(getCountriesStats);
     const minConfirmed = useAppSelector(getMinConfirmed);
     const maxConfirmed = useAppSelector(getMaxConfirmed);
-    const countries = useAppSelector(getCountriesStats);
     const colorScale = scaleLinear([minConfirmed, maxConfirmed], ['#ffedea', '#ff5233']);
 
-    const onCountryEnter = (country: Country) => {
+    const countryEnterHandler = (country: Country) => {
         setTooltipContent(<TooltipContent country={country}/>);
     };
 
-    const onCountryLeave = () => {
+    const countryLeaveHandler = () => {
         setTooltipContent('');
     };
 
     return (
         <div>
             <Map
-                onMouseEnter={onCountryEnter}
-                onMouseLeave={onCountryLeave}
-                colorScale={colorScale}
                 countries={countries}
+                colorScale={colorScale}
+                onMouseEnter={countryEnterHandler}
+                onMouseLeave={countryLeaveHandler}
             />
             <ReactTooltip>
                 {tooltipContent}
