@@ -3,17 +3,17 @@ import './periods-buttons.scss';
 import {Button} from 'react-bootstrap';
 
 type Props = {
-    allowedPeriods: number[],
-    selectPeriod: (period: number) => void,
+    periods: number[],
+    selectPeriodHandler: (period: number) => void,
 };
 
-export const PeriodsButtons = ({allowedPeriods, selectPeriod} : Props) => {
+export const PeriodsButtons = ({periods, selectPeriodHandler} : Props) => {
     return (
         <div className='periods-buttons'>
             <h3 className='periods-buttons__title'>Periods:</h3>
             <div className='periods-buttons__buttons'>
-                {allowedPeriods.map(period => (
-                    <Button key={period} onClick={() => selectPeriod(period)}>
+                {periods.map(period => (
+                    <Button key={period} onClick={() => selectPeriodHandler(period)}>
                         {period}
                     </Button>
                 ))}

@@ -15,26 +15,26 @@ import {ProvincesTable} from '../components/provinces-table';
 export const CountryStats = () => {
     const {countryName} = useParams();
     const dispatch = useDispatch();
-    const allowedPeriods = [7, 14, 30, 60];
-    const [period, setPeriod] = useState(allowedPeriods[0]);
+    const periods = [7, 14, 30, 60];
+    const [period, setPeriod] = useState(periods[0]);
     const minDate = useAppSelector(getMinDate);
     const maxDate = useAppSelector(getMaxDate);
     const [date, setDate] = useState(maxDate);
     const statsByPeriod = useAppSelector(state => getStatsByPeriod(state, date, period));
-    const provinces = useAppSelector(state => getProvinces(state, date))
+    const provinces = useAppSelector(state => getProvinces(state, date));
 
-    const selectPeriod = (period: number) => {
-        setPeriod(period)
-    }
+    const selectPeriodHandler = (period: number) => {
+        setPeriod(period);
+    };
 
     useEffect(() => {
         dispatch(loadCountryStats(countryName));
         dispatch(loadProvincesStats(countryName));
-    }, []);
+    }, [dispatch, countryName]);
 
     useEffect(() => {
-        setDate(maxDate)
-    }, [maxDate])
+        setDate(maxDate);
+    }, [maxDate]);
 
     return (
         <div className='country-stats'>
@@ -55,7 +55,7 @@ export const CountryStats = () => {
                     onChange={setDate}
                     value={date}
                 />
-                <PeriodsButtons selectPeriod={selectPeriod} allowedPeriods={allowedPeriods}/>
+                <PeriodsButtons selectPeriodHandler={selectPeriodHandler} periods={periods}/>
                 <CountryChart stats={statsByPeriod}/>
             </div>
 
