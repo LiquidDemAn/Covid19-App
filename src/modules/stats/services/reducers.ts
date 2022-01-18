@@ -3,7 +3,6 @@ import {createReducer} from '@reduxjs/toolkit';
 import {
     loadAllStats,
     loadCountryStats,
-    loadProvincesStats,
     setFoundCountries,
     clearFoundCountries
 } from './actions';
@@ -11,7 +10,6 @@ import {
 const State: StateType = {
     foundCountries: [],
     countryStats: [],
-    provincesStats: []
 };
 
 export const stats = createReducer(State, builder => builder
@@ -23,16 +21,13 @@ export const stats = createReducer(State, builder => builder
         state.countryStats = payload;
     })
 
-    .addCase(loadProvincesStats.fulfilled, (state, {payload}) => {
-        state.provincesStats = payload.sort((a, b) => b.Confirmed - a.Confirmed);
-    })
-
     .addCase(setFoundCountries, (state, {payload}) => {
         const countries = state.summary?.Countries;
         const filteredCountries = countries?.filter(country => {
             return country.Country.toLowerCase().indexOf(payload.value.toLowerCase()) === 0;
         });
-        state.foundCountries = filteredCountries?.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed);
+        const sortedCountries = filteredCountries?.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed);
+        state.foundCountries = sortedCountries?.slice(0, payload.listLength);
     })
 
     .addCase(clearFoundCountries, (state) => {

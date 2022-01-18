@@ -46,11 +46,8 @@ export type Day = {
     Date: string
 };
 
-export type Province = Day;
-
 export type StateType = {
     summary?: Summary,
     foundCountries?: Country[],
     countryStats: Day[],
-    provincesStats: Province[]
 };

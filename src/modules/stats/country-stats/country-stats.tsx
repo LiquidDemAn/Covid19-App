@@ -4,32 +4,35 @@ import 'react-calendar/dist/Calendar.css';
 import {Link, useParams} from 'react-router-dom';
 import Calendar from 'react-calendar';
 import {useDispatch} from 'react-redux';
-import {loadCountryStats, loadProvincesStats} from '../services/actions';
+import {loadCountryStats} from '../services/actions';
 import {CountryChart} from '../components/country-chart';
 import {useAppSelector} from '../../../store/hooks';
-import {getMinDate, getMaxDate, getStatsByPeriod, getProvinces} from '../services/selectors';
-import {PeriodsButtons} from '../components/periods-buttons';
+import {getMinDate, getMaxDate, getStatsByPeriod} from '../services/selectors';
 import {Button} from 'react-bootstrap';
-import {ProvincesTable} from '../components/provinces-table';
+import {SelectPeriod} from "../components/select-period";
 
 export const CountryStats = () => {
     const {countryName} = useParams();
     const dispatch = useDispatch();
-    const periods = [7, 14, 30, 60];
-    const [period, setPeriod] = useState(periods[0]);
+    const initialPeriod = 7;
+    const [period, setPeriod] = useState(initialPeriod);
     const minDate = useAppSelector(getMinDate);
     const maxDate = useAppSelector(getMaxDate);
     const [date, setDate] = useState(maxDate);
     const statsByPeriod = useAppSelector(state => getStatsByPeriod(state, date, period));
-    const provinces = useAppSelector(state => getProvinces(state, date));
 
     const selectPeriodHandler = (period: number) => {
-        setPeriod(period);
+        if (period <= 0) {
+            setPeriod(initialPeriod);
+        } else {
+            setPeriod(period);
+        }
     };
 
     useEffect(() => {
-        dispatch(loadCountryStats(countryName));
-        dispatch(loadProvincesStats(countryName));
+        if (countryName) {
+            dispatch(loadCountryStats(countryName));
+        }
     }, [dispatch, countryName]);
 
     useEffect(() => {
@@ -55,15 +58,10 @@ export const CountryStats = () => {
                     onChange={setDate}
                     value={date}
                 />
-                <PeriodsButtons selectPeriodHandler={selectPeriodHandler} periods={periods}/>
+                <SelectPeriod period={period} selectPeriodHandler={selectPeriodHandler}/>
+                {/*<PeriodsButtons selectPeriodHandler={selectPeriodHandler} periods={periods}/>*/}
                 <CountryChart stats={statsByPeriod}/>
             </div>
-
-            <div className='country-stats__provinces'>
-                <h2>Statistics by provinces for {date.toLocaleDateString()}</h2>
-                <ProvincesTable provinces={provinces}/>
-            </div>
-
         </div>
     );
 };
