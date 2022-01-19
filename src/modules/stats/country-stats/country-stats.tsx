@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './country-stats.scss'
 import 'react-calendar/dist/Calendar.css';
 import {Link, useParams} from 'react-router-dom';
 import Calendar from 'react-calendar';
 import {useDispatch} from 'react-redux';
-import {loadCountryStats} from '../services/actions';
 import {CountryChart} from '../components/country-chart';
 import {useAppSelector} from '../../../store/hooks';
 import {getMinDate, getMaxDate, getStatsByPeriod} from '../services/selectors';
 import {Button} from 'react-bootstrap';
-import {SelectPeriod} from "../components/select-period";
+import {SelectPeriod} from '../components/select-period';
+import {loadCountryStats} from '../services/actions';
 
 export const CountryStats = () => {
     const {countryName} = useParams();
@@ -21,13 +21,13 @@ export const CountryStats = () => {
     const [date, setDate] = useState(maxDate);
     const statsByPeriod = useAppSelector(state => getStatsByPeriod(state, date, period));
 
-    const selectPeriodHandler = (period: number) => {
+    const selectPeriodHandler = useCallback((period: number) => {
         if (period <= 0) {
             setPeriod(initialPeriod);
         } else {
             setPeriod(period);
         }
-    };
+    }, []);
 
     useEffect(() => {
         if (countryName) {
@@ -41,17 +41,16 @@ export const CountryStats = () => {
 
     return (
         <div className='country-stats'>
-            <h1 className='country-stats__title'>Stats of Covid-19 by {countryName}</h1>
-
-            <div className='country-stats__links'>
+            <header className='country-stats__header'>
+                <h1 className='country-stats__title'>Stats of Covid-19 by {countryName}</h1>
                 <Link to='/'>
                     <Button size='lg'>
                         All Stats
                     </Button>
                 </Link>
-            </div>
+            </header>
 
-            <div className='country-stats__chart'>
+            <main className='country-stats__main'>
                 <Calendar
                     maxDate={maxDate}
                     minDate={minDate}
@@ -59,9 +58,8 @@ export const CountryStats = () => {
                     value={date}
                 />
                 <SelectPeriod period={period} selectPeriodHandler={selectPeriodHandler}/>
-                {/*<PeriodsButtons selectPeriodHandler={selectPeriodHandler} periods={periods}/>*/}
                 <CountryChart stats={statsByPeriod}/>
-            </div>
+            </main>
         </div>
     );
 };

@@ -19,7 +19,7 @@ type Props = {
 
 export const Map = ({onMouseEnter, onMouseLeave, colorScale, countries}: Props) => {
     return (
-        <ComposableMap data-tip="" width={900} height={400} projectionConfig={{scale: 150}}>
+        <ComposableMap data-tip="" width={900} height={500} projectionConfig={{scale: 180}}>
             <ZoomableGroup>
                 <Geographies geography={geoUrl}>
                     {({geographies}) =>

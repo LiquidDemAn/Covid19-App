@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {ListGroup} from 'react-bootstrap';
 import {Global} from '../../services/typedef';
 
@@ -6,7 +6,7 @@ type Props = {
     stats?: Global
 };
 
-export const GlobalList = ({stats}: Props) => {
+export const GlobalList = memo(({stats}: Props) => {
     return (
         <ListGroup>
             <ListGroup.Item>New Confirmed: {stats?.NewConfirmed}</ListGroup.Item>
@@ -18,5 +18,5 @@ export const GlobalList = ({stats}: Props) => {
         </ListGroup>
 
     );
-};
+});
 

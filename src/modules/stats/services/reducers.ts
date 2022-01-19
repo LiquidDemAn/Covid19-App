@@ -14,7 +14,7 @@ const State: StateType = {
 
 export const stats = createReducer(State, builder => builder
     .addCase(loadAllStats.fulfilled, (state, {payload}) => {
-        state.summary = payload;
+        state.allStats = payload;
     })
 
     .addCase(loadCountryStats.fulfilled, (state, {payload}) => {
@@ -22,12 +22,12 @@ export const stats = createReducer(State, builder => builder
     })
 
     .addCase(setFoundCountries, (state, {payload}) => {
-        const countries = state.summary?.Countries;
+        const countries = state.allStats?.Countries;
         const filteredCountries = countries?.filter(country => {
             return country.Country.toLowerCase().indexOf(payload.value.toLowerCase()) === 0;
         });
         const sortedCountries = filteredCountries?.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed);
-        state.foundCountries = sortedCountries?.slice(0, payload.listLength);
+        state.foundCountries = sortedCountries?.slice(0, payload.length);
     })
 
     .addCase(clearFoundCountries, (state) => {

@@ -9,7 +9,7 @@ type Props = {
 export const SelectPeriod = ({period, selectPeriodHandler}: Props) => {
     return (
         <div>
-            <h2>Period:</h2>
+            <h2>Period(Days):</h2>
             <InputGroup>
                 <FormControl
                     type='number'

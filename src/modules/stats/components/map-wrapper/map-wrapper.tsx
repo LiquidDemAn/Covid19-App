@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from 'react';
+import React, {memo, ReactElement, useState} from 'react';
 import {Map} from '../map';
 import ReactTooltip from 'react-tooltip';
 import {scaleLinear} from 'd3-scale';
@@ -7,9 +7,9 @@ import {getCountriesStats, getMaxConfirmed, getMinConfirmed} from '../../service
 import {TooltipContent} from '../tooltip-content';
 import {Country} from '../../services/typedef';
 
-export const MapWrapper = () => {
+export const MapWrapper = memo(() => {
     const [tooltipContent, setTooltipContent] = useState<string | ReactElement>('');
-    const countries = useAppSelector(getCountriesStats);
+    const countriesStats = useAppSelector(getCountriesStats);
     const minConfirmed = useAppSelector(getMinConfirmed);
     const maxConfirmed = useAppSelector(getMaxConfirmed);
     const colorScale = scaleLinear([minConfirmed, maxConfirmed], ['#ffedea', '#ff5233']);
@@ -25,7 +25,7 @@ export const MapWrapper = () => {
     return (
         <div>
             <Map
-                countries={countries}
+                countries={countriesStats}
                 colorScale={colorScale}
                 onMouseEnter={countryEnterHandler}
                 onMouseLeave={countryLeaveHandler}
@@ -35,5 +35,5 @@ export const MapWrapper = () => {
             </ReactTooltip>
         </div>
     );
-};
+});
 

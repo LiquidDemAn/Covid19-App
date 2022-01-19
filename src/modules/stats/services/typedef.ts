@@ -22,7 +22,7 @@ export type Global = {
     Date: string
 };
 
-export type Summary = {
+export type AllStats = {
     ID: string,
     Message: string,
     Global: Global,
@@ -47,7 +47,7 @@ export type Day = {
 };
 
 export type StateType = {
-    summary?: Summary,
+    allStats?: AllStats,
     foundCountries?: Country[],
     countryStats: Day[],
 };

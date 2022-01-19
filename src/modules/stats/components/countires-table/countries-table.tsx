@@ -6,7 +6,7 @@ import {Country} from '../../services/typedef';
 
 type Props = {
     countries?: Country[],
-    searchHandler: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+    searchHandler: (event: React.ChangeEvent<HTMLSelectElement>) => void
 };
 
 export const CountriesTable = ({countries, searchHandler}: Props) => {
