@@ -4,12 +4,13 @@ import {
     loadAllStats,
     loadCountryStats,
     setFoundCountries,
-    clearFoundCountries
+    clearFoundCountries, setCountry
 } from './actions';
 
 const State: StateType = {
     foundCountries: [],
-    countryStats: [],
+    country: '',
+    visitedCountries: {}
 };
 
 export const stats = createReducer(State, builder => builder
@@ -18,7 +19,7 @@ export const stats = createReducer(State, builder => builder
     })
 
     .addCase(loadCountryStats.fulfilled, (state, {payload}) => {
-        state.countryStats = payload;
+        state.visitedCountries[payload.country] = payload.stats;
     })
 
     .addCase(setFoundCountries, (state, {payload}) => {
@@ -32,5 +33,9 @@ export const stats = createReducer(State, builder => builder
 
     .addCase(clearFoundCountries, (state) => {
         state.foundCountries = [];
+    })
+
+    .addCase(setCountry, (state, {payload}) => {
+        state.country = payload.country;
     })
 );

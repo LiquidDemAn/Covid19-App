@@ -6,16 +6,17 @@ import Calendar from 'react-calendar';
 import {useDispatch} from 'react-redux';
 import {CountryChart} from '../components/country-chart';
 import {useAppSelector} from '../../../store/hooks';
-import {getMinDate, getMaxDate, getStatsByPeriod} from '../services/selectors';
+import {getMinDate, getMaxDate, getStatsByPeriod, getCountry} from '../services/selectors';
 import {Button} from 'react-bootstrap';
 import {SelectPeriod} from '../components/select-period';
-import {loadCountryStats} from '../services/actions';
+import {loadCountryStats, setCountry} from '../services/actions';
 
 export const CountryStats = () => {
     const {countryName} = useParams();
     const dispatch = useDispatch();
     const initialPeriod = 7;
     const [period, setPeriod] = useState(initialPeriod);
+    const country = useAppSelector(getCountry);
     const minDate = useAppSelector(getMinDate);
     const maxDate = useAppSelector(getMaxDate);
     const [date, setDate] = useState(maxDate);
@@ -31,9 +32,17 @@ export const CountryStats = () => {
 
     useEffect(() => {
         if (countryName) {
-            dispatch(loadCountryStats(countryName));
+            dispatch(setCountry({country: countryName}))
         }
-    }, [dispatch, countryName]);
+    }, []);
+
+    useEffect(() => {
+        if (country) {
+            if (!statsByPeriod.length) {
+                dispatch(loadCountryStats(country));
+            }
+        }
+    }, [country]);
 
     useEffect(() => {
         setDate(maxDate);
