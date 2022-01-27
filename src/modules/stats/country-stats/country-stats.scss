@@ -1,0 +1,22 @@
+.country-stats {
+  padding: 30px 0;
+}
+
+.country-stats__header {
+  margin-bottom: 50px;
+  text-align: center;
+}
+.country-stats__title {
+  margin-bottom: 30px;
+}
+
+.country-stats__main {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: self-start;
+}
+
+.country-stats__links {
+  display: flex;
+  justify-content: center;
+}

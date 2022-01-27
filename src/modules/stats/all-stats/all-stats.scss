@@ -1,0 +1,18 @@
+.all-stats {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  column-gap: 50px;
+  padding: 25px;
+}
+
+.all-stats__sidebar{
+  display: flex;
+  width: 25%;
+  flex-direction: column;
+  row-gap: 25px;
+}
+
+.all-stats__map{
+  width: 75%;
+}
