@@ -3,3 +3,12 @@
   flex-direction: column;
   row-gap: 20px;
 }
+
+.countries-table__table {
+  height: 290px;
+  overflow:  auto;
+}
+
+.countries-table__empty {
+  text-align: center;
+}

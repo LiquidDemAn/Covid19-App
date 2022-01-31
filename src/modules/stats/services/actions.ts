@@ -10,6 +10,6 @@ export const loadCountryStats = createAsyncThunk<{stats: Day[], country: string}
     return {stats, country};
 });
 
-export const setFoundCountries = createAction<{ value: string, length: number }>('stats/set-found-countries');
+export const setFoundCountries = createAction<{ value: string }>('stats/set-found-countries');
 export const clearFoundCountries = createAction('stats/clear-found-countries');
 export const setCountry = createAction<{ country: string }>('stats/set-country');

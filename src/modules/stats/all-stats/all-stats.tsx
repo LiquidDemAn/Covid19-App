@@ -18,7 +18,7 @@ export const AllStats = () => {
         const value = event.target.value;
 
         if (value) {
-            dispatch(setFoundCountries({value: value, length: tableLength}));
+            dispatch(setFoundCountries({value: value}));
         } else {
             dispatch(clearFoundCountries());
         }
